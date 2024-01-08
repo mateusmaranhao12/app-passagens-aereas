@@ -1,0 +1,10 @@
+@import 'variaveis';
+
+.card {
+    border: 1px solid $darkred;
+}
+.card-body {
+    h3 {
+        color: $darkred;
+    }
+}
