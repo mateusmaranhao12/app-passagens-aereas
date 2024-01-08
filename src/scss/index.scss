@@ -1,0 +1,31 @@
+@import 'variaveis';
+
+.secao-inicial {
+    margin-top: 2rem;
+
+    img {
+        border-radius: 20px;
+    }
+
+    h2 {
+        text-transform: $uppercase;
+        font-weight: $bold;
+        color: $black;
+    }
+
+    p {
+        color: $black;
+    }
+}
+
+.secao-voos {
+
+    h4 {
+        color: $darkred;
+        text-transform: $uppercase;
+        font-weight: $bold;
+        text-align: $center;
+        margin-top: 60px;
+    }
+
+}

@@ -1,5 +1,6 @@
 <template>
     <nav>
+        <h3><i class="fa-solid fa-plane"></i> App Passagens Aéreas</h3>
         <div class="navbar-container">
             <ul class="nav nav-underline">
                 <li class="nav-item">
