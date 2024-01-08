@@ -1,6 +1,6 @@
 <template>
     <NavbarIndex></NavbarIndex>
-    <h1>Index</h1>
+    <h1>Cadastro</h1>
 </template>
 
 <script lang="ts">
@@ -15,7 +15,7 @@ import NavbarIndex from '@/components/NavbarIndex.vue'
 
 })
 
-export default class Index extends Vue {
+export default class Cadastro extends Vue {
 
   
 

@@ -1,0 +1,21 @@
+.navbar-container {
+    display: flex;
+    justify-content: center;
+}
+
+.nav-underline {
+
+    padding: 1.5em;
+    border-bottom: 1px solid rgb(77, 77, 77);
+
+    .nav-link {
+        color: rgb(61, 0, 0);
+        text-transform: uppercase;
+        font-weight: bold;
+
+        &.active {
+            color: red;
+            cursor: text;
+        }
+    }
+}
