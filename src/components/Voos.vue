@@ -3,7 +3,7 @@
         <div class="container">
             <div class="row">
                 <div class="col">
-                    <h2>Bem vindo (a), Mateus, aqui temos vôos nacionais e internacionais saindo de sua cidade: Goiânia - GO
+                    <h2>Bem vindo (a), Mateus, aqui temos vôos nacionais e internacionais saindo de sua cidade: Goiânia/GO
                     </h2>
                 </div>
             </div>
@@ -14,7 +14,7 @@
         <div class="container">
             <div class="row">
                 <div class="col-12 text">
-                    <h5><i class="fa-solid fa-plane"></i> Vôos nacionais saindo de Goiânia - GO</h5>
+                    <h5><i class="fa-solid fa-plane"></i> Vôos nacionais saindo de Goiânia/GO</h5>
                 </div>
 
                 <div v-for="vn in voos_nacionais" :key="vn.destino" class="col-12 col-md-4 mb-4">
@@ -34,7 +34,7 @@
                 </div>
 
                 <div class="col-12 text">
-                    <h5><i class="fa-solid fa-plane"></i> Vôos internacionais saindo de Goiânia - GO</h5>
+                    <h5><i class="fa-solid fa-plane"></i> Vôos internacionais saindo de Goiânia/GO</h5>
                 </div>
 
                 <div v-for="vi in voos_internacionais" :key="vi.destino" class="col-12 col-md-4 mb-4">
@@ -73,12 +73,12 @@ export default class Voos extends Vue {
 
     voos_nacionais = [
 
-        { destino: 'Fortaleza - CE', texto: 'Conexão em Recife/PE > Fortaleza/CE' },
-        { destino: 'Gramado - RS', texto: 'Conexão em São Paulo/SP > Porto Alegre/RS (Terá que pegar transporte até o destino final)' },
-        { destino: 'Fernando de Noronha - PE', texto: 'Conexão em São Paulo/SP > Conexão em Recife/PE > Fernando de Noronha/PE' },
-        { destino: 'Curitiba - PR', texto: 'Conexão em São Paulo/SP > Curitiba/PR' },
+        { destino: 'Fortaleza/CE', texto: 'Conexão em Recife/PE > Fortaleza/CE' },
+        { destino: 'Gramado/RS', texto: 'Conexão em São Paulo/SP > Porto Alegre/RS (Terá que pegar transporte até o destino final)' },
+        { destino: 'Fernando de Noronha/PE', texto: 'Conexão em São Paulo/SP > Conexão em Recife/PE > Fernando de Noronha/PE' },
+        { destino: 'Curitiba/PR', texto: 'Conexão em São Paulo/SP > Curitiba/PR' },
         { destino: 'Rio de Janeiro/RJ', texto: 'Vôo direto' },
-        { destino: 'Florianópolis - SC', texto: 'Conexão em São Paulo/SP > Florianópolis/SC' },
+        { destino: 'Florianópolis/SC', texto: 'Conexão em São Paulo/SP > Florianópolis/SC' },
         { destino: 'João Pessoa/PB', texto: 'Conexão em São Paulo/SP > Conexão em Recife/PE > João Pessoa/PB' },
         { destino: 'Aracaju/SE', texto: 'Conexão em São Paulo/SP > Aracaju/SE' },
         { destino: 'Maceió/AL', texto: 'Conexão em Salvador/BA > Maceió/AL' }
