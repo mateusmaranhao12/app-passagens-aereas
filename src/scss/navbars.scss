@@ -1,7 +1,13 @@
 @import 'variaveis.scss';
 
-h3 {
-    color: $darkred;
+.bg-navbar {
+    background: rgb(255, 66, 66);
+    background: linear-gradient(42deg, rgba(255, 66, 66, 1) 0%, rgba(164, 0, 0, 1) 35%, rgba(48, 0, 0, 1) 100%);
+}
+
+h3,
+h4 {
+    color: $white;
     text-transform: $uppercase;
     font-weight: $bold;
     text-align: $center;

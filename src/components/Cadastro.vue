@@ -83,11 +83,15 @@ export default class Login extends Vue {
     mostrar_senha = false
 
     cidades = [
-        {id: 1, cidade: 'São Paulo - SP'},
-        {id: 2, cidade: 'Rio de Janeiro - RJ'},
-        {id: 3, cidade: 'Salvador - BA'},
-        {id: 4, cidade: 'Recife - PE'},
-        {id: 5, cidade: 'Brasília - DF'}
+        {id: 1, cidade: 'Goiânia - GO'},
+        {id: 2, cidade: 'Campinas - SP'},
+        {id: 3, cidade: 'Manaus - AM'},
+        {id: 4, cidade: 'Campo Grande - MS'},
+        {id: 5, cidade: 'Belo Horizonte - MG'},
+        {id: 6, cidade: 'Belém - PA'},
+        {id: 7, cidade: 'Cuiabá - MT'},
+        {id: 8, cidade: 'Natal - RN'},
+        {id: 9, cidade: 'São Luís - MA'},
     ]
 
     public alternarExibicaoSenha() {

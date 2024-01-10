@@ -1,8 +1,31 @@
 <template>
+    <nav class="navbar navbar-expand-lg bg-navbar">
+        <div class="container-fluid">
+
+            <a class="navbar-brand" href="#">
+                <h4><i class="fa-solid fa-user"></i> Mateus</h4>
+            </a>
+
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup"
+                aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse justify-content-end" id="navbarNavAltMarkup">
+                <div class="navbar-nav">
+                    <li class="nav-item">
+                        <button @click="fazerLogout()" class="btn btn-danger">
+                            <i class="fa-solid fa-arrow-right-from-bracket"></i>
+                        </button>
+                    </li>
+                </div>
+            </div>
+        </div>
+    </nav>
+
     <nav>
-        <h3><i class="fa-solid fa-plane"></i> App Passagens Aéreas</h3>
         <div class="navbar-container">
-            <ul class="nav nav-underline mt-auto">
+            <ul class="nav nav-underline">
                 <li class="nav-item">
                     <router-link :class="{ active: $route.name === 'Voos' }" class="nav-link" :to="{ name: 'Voos' }">Vôos
                         disponíveis</router-link>
@@ -10,12 +33,6 @@
                 <li class="nav-item">
                     <router-link :class="{ active: $route.name === 'MeusVoos' }" class="nav-link"
                         :to="{ name: 'MeusVoos' }">Meus Vôos</router-link>
-                </li>
-
-                <li class="nav-item">
-                    <button @click="fazerLogout()" class="btn btn-danger">
-                        <i class="fa-solid fa-arrow-right-from-bracket"></i> Encerrar sessão
-                    </button>
                 </li>
             </ul>
         </div>
