@@ -6,7 +6,7 @@
                 <div class="col-md-6">
                     <img class="img-fluid" src="../assets/imgs/aviao.jpg">
                 </div>
-                <div class="col-md-6 text-center mt-5">
+                <div class="texto-secao-inicial col-md-6 text-center mt-5">
                     <h2>Seja muito Bem Vindo(a)</h2>
                     <p>Aqui no App Passagens Aéreas, você encontra vários vôos nacionais e internacionais saindo de sua
                         cidade</p>

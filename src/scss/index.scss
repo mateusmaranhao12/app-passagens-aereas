@@ -7,20 +7,33 @@
         border-radius: 20px;
     }
 
-    h2 {
-        text-transform: $uppercase;
-        font-weight: $bold;
-        color: $black;
-    }
+    .texto-secao-inicial {
 
-    p {
-        color: $black;
+        padding: 20px;
+        border-radius: 20px;
+        height: 130px;
+        background-color: $darkred;
+        box-shadow: rgba(78, 0, 0, 0.4) 5px 5px, rgba(78, 46, 46, 0.3) 10px 10px, rgba(78, 46, 46, 0.2) 15px 15px, rgba(78, 46, 46, 0.1) 20px 20px, rgba(78, 46, 46, 0.05)25px 25px;
+
+        h2 {
+            text-transform: $uppercase;
+            font-weight: $bold;
+            color: $white;
+        }
+
+        p {
+            color: $white;
+        }
+
     }
 }
 
 .secao-voos {
 
     h4 {
+        border-bottom: 1px solid $darkred;
+        border-top: 1px solid $darkred;
+        padding: 10px;
         color: $darkred;
         text-transform: $uppercase;
         font-weight: $bold;
