@@ -2,7 +2,7 @@
     <div class="login d-flex justify-content-center">
         <div class="card mx-auto mt-5 mb-3">
             <div class="card-body">
-                <h3 class="card-title mb-5">Agende seu vôo agora mesmo!</h3>
+                <h3 class="card-title mb-5">Agendar vôo: Goiânia/GO - Fortaleza/CE</h3>
                 <div class="container">
                     <div class="row">
                         <form>
