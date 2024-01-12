@@ -9,6 +9,7 @@ import Cadastro from '../components/Cadastro.vue'
 import PaginaUsuario from '../views/PaginaUsuario.vue'
 import Voos from '../components/Voos.vue'
 import MeusVoos from '../components/MeusVoos.vue'
+import agendarVoo from '../components/agendarVoo.vue'
 
 const routes: Array<RouteRecordRaw> = [
   {
@@ -45,6 +46,12 @@ const routes: Array<RouteRecordRaw> = [
         path: 'meus-voos',
         name: 'MeusVoos',
         component: MeusVoos
+      },
+
+      {
+        path: 'agendar-voo',
+        name: 'agendarVoo',
+        component: agendarVoo
       }
     ]
   }

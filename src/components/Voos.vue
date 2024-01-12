@@ -25,7 +25,7 @@
 
                             <div class="text-center">
                                 <div class="form-group col-md-12 d-flex justify-content-end">
-                                    <button class="btn btn-danger mt-3">Agendar</button>
+                                    <button @click="agendarVoo()" class="btn btn-danger mt-3">Agendar</button>
                                 </div>
                             </div>
 
@@ -45,7 +45,7 @@
 
                             <div class="text-center">
                                 <div class="form-group col-md-12 d-flex justify-content-end">
-                                    <button class="btn btn-danger mt-3">Agendar</button>
+                                    <button @click="agendarVoo()" class="btn btn-danger mt-3">Agendar</button>
                                 </div>
                             </div>
 
@@ -98,6 +98,10 @@ export default class Voos extends Vue {
         { destino: 'Nova Iorque', texto: 'Conexão em São Paulo/SP > Nova Iorque' }
 
     ]
+
+    public agendarVoo() {
+        this.$router.push('agendar-voo')
+    }
 
 }
 </script>
