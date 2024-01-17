@@ -4,19 +4,22 @@
         <div class="card mx-auto mt-5 mb-3">
             <div class="card-body">
                 <h3 class="card-title mb-5">Faça Login agora mesmo!</h3>
+                <div v-if="mensagem_erro_login" class="alert alert-danger text-center">
+                    {{ mensagem_erro_login }}
+                </div>
                 <div class="container">
                     <div class="row">
                         <form>
                             <div class="form-group">
                                 <label for="email">E-mail <span class="text-danger">*</span> </label>
-                                <input type="text" ref="email" placeholder="e-mail" id="email"
+                                <input v-model="usuarios_cadastrados.email" type="text" ref="email" placeholder="e-mail" id="email"
                                     class="form-control mb-3 white-text" name="email" />
                             </div>
 
                             <div class="form-group">
                                 <label for="senha">Senha <span class="text-danger">*</span></label>
                                 <div class="input-group mb-3">
-                                    <input :type="mostrar_senha ? 'text' : 'password'" class="form-control white-text"
+                                    <input v-model="usuarios_cadastrados.senha" :type="mostrar_senha ? 'text' : 'password'" class="form-control white-text"
                                         placeholder="Senha" name="senha" aria-label="Senha"
                                         aria-describedby="button-addon2">
                                     <button @click="alternarExibicaoSenha()" class="btn btn-outline-danger" type="button"
@@ -29,7 +32,7 @@
 
                             <div class="form-row mt-4 mb-4 text-center">
                                 <div class="form-group col-md-12 d-flex justify-content-end">
-                                    <button @click="fazerLogin()" class="btn btn-danger mt-3">Fazer login</button>
+                                    <button @click.prevent="fazerLogin()" class="btn btn-danger mt-3">Fazer login</button>
                                 </div>
                             </div>
 
@@ -49,6 +52,7 @@
 <script lang="ts">
 import { Options, Vue } from 'vue-class-component'
 import NavbarIndex from '@/components/NavbarIndex.vue'
+import axios from 'axios'
 
 @Options({
 
@@ -60,19 +64,54 @@ import NavbarIndex from '@/components/NavbarIndex.vue'
 
 export default class Login extends Vue {
 
+    usuarios_cadastrados = { email: '', senha: '' }
     mostrar_senha = false
+    senha = ''
+    mensagem_erro_login = ''
+
+    public async fazerLogin() { //fazer login
+
+        const formData = new FormData()
+
+        formData.append('email', this.usuarios_cadastrados.email)
+        formData.append('senha', this.usuarios_cadastrados.senha)
+
+        try {
+
+            const response = await axios.post(
+                'http://localhost/projetos/app-passagens-aereas/src/backend/login.php',
+                formData
+            )
+
+            const data = response.data
+            console.log('Dados do servidor após login:', data)
+
+            if (data.status === 'sucesso') { //login com sucesso
+
+                this.$router.push('/pagina-usuario')
+
+            } else if (data.status === 'erro') {
+
+                this.mensagem_erro_login = data.mensagem
+                setTimeout(() => {
+                    this.mensagem_erro_login = ''
+                }, 5000)
+
+            }
+
+        } catch (error) {
+            console.error('Erro ao fazer Login:', error)
+            this.mensagem_erro_login = 'Ocorreu um erro ao fazer login'
+        }
+    }
 
     public alternarExibicaoSenha() {
         this.mostrar_senha = !this.mostrar_senha
-    }
-
-    public fazerLogin() {
-        this.$router.push('/pagina-usuario')
     }
 
 }
 </script>
 
 <style lang="scss">
-    @import '../scss/forms.scss';
+@import '../scss/forms.scss';
 </style>
