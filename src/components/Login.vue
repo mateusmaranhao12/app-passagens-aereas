@@ -53,6 +53,7 @@
 import { Options, Vue } from 'vue-class-component'
 import NavbarIndex from '@/components/NavbarIndex.vue'
 import axios from 'axios'
+import auth from '@/utils/auth'
 
 @Options({
 
@@ -88,7 +89,19 @@ export default class Login extends Vue {
 
             if (data.status === 'sucesso') { //login com sucesso
 
-                this.$router.push('/pagina-usuario')
+                auth.usuarioAutenticado = true
+                localStorage.setItem('usuarioNome', data.nome)
+                localStorage.setItem('usuarioId', data.id)
+                localStorage.setItem('localOrigem', data.local_origem)
+                localStorage.setItem('authToken', data.authToken)
+
+                console.log('Dados configurados. Aguardando reatividade...')
+
+                await this.$nextTick() //Aguardar a atualização dos dados antes de redirecionar
+
+                console.log('Reatividade concluída. Redirecionando...')
+
+                this.$router.replace('/pagina-usuario')
 
             } else if (data.status === 'erro') {
 

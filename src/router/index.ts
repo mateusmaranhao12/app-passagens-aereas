@@ -11,6 +11,9 @@ import Voos from '../components/Voos.vue'
 import MeusVoos from '../components/MeusVoos.vue'
 import agendarVoo from '../components/agendarVoo.vue'
 
+//guarda de autenticação
+import { requerAutorizacao } from '../utils/authGuard'
+
 const routes: Array<RouteRecordRaw> = [
   {
     path: '/',
@@ -35,6 +38,8 @@ const routes: Array<RouteRecordRaw> = [
     name: 'PaginaUsuario',
     component: PaginaUsuario,
     redirect: '/pagina-usuario/voos',
+    meta: { requerAutorizacao: true },
+    beforeEnter: requerAutorizacao,
     children: [
       {
         path: 'voos',

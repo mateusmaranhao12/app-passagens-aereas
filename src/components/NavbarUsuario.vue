@@ -3,7 +3,7 @@
         <div class="container-fluid">
 
             <a class="navbar-brand" href="#">
-                <h4><i class="fa-solid fa-user"></i> Mateus</h4>
+                <h4><i class="fa-solid fa-user"></i> {{ nomeUsuario }}</h4>
             </a>
 
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup"
@@ -41,6 +41,7 @@
 
 
 <script lang="ts">
+import auth from '@/utils/auth'
 import { Options, Vue } from 'vue-class-component'
 
 @Options({
@@ -48,7 +49,15 @@ import { Options, Vue } from 'vue-class-component'
 })
 export default class NavbarUsuario extends Vue {
 
+    get nomeUsuario() {
+        return localStorage.getItem('usuarioNome') || auth.usuarioNome || ''
+    }
+
     public fazerLogout() {
+        localStorage.removeItem('authToken')
+        localStorage.removeItem('usuarioNome')
+        auth.usuarioAutenticado = false
+        auth.usuarioNome = ''
         this.$router.push('/')
     }
 

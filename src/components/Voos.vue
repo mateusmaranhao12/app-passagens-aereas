@@ -3,7 +3,7 @@
         <div class="container">
             <div class="row">
                 <div class="col">
-                    <h2>Bem vindo (a), Mateus, aqui temos vôos nacionais e internacionais saindo de sua cidade: Goiânia/GO
+                    <h2>Bem vindo (a), {{ nomeUsuario }}, aqui temos vôos nacionais e internacionais saindo de sua cidade: {{ localOrigem }}
                     </h2>
                 </div>
             </div>
@@ -14,13 +14,13 @@
         <div class="container">
             <div class="row">
                 <div class="col-12 text">
-                    <h5><i class="fa-solid fa-plane"></i> Vôos nacionais saindo de Goiânia/GO</h5>
+                    <h5><i class="fa-solid fa-plane"></i> Vôos nacionais saindo de {{ localOrigem }}</h5>
                 </div>
 
                 <div v-for="vn in voos_nacionais" :key="vn.destino" class="col-12 col-md-4 mb-4">
                     <div class="card">
                         <div class="card-body">
-                            <h6 class="card-title">Goiânia/GO - {{ vn.destino }}</h6>
+                            <h6 class="card-title">{{ localOrigem }} - {{ vn.destino }}</h6>
                             <p class="card-text">{{ vn.texto }}</p>
 
                             <div class="text-center">
@@ -34,13 +34,13 @@
                 </div>
 
                 <div class="col-12 text">
-                    <h5><i class="fa-solid fa-plane"></i> Vôos internacionais saindo de Goiânia/GO</h5>
+                    <h5><i class="fa-solid fa-plane"></i> Vôos internacionais saindo de {{ localOrigem }}</h5>
                 </div>
 
                 <div v-for="vi in voos_internacionais" :key="vi.destino" class="col-12 col-md-4 mb-4">
                     <div class="card">
                         <div class="card-body">
-                            <h6 class="card-title">Goiânia/GO - {{ vi.destino }}</h6>
+                            <h6 class="card-title">{{ localOrigem }} - {{ vi.destino }}</h6>
                             <p class="card-text">{{ vi.texto }}</p>
 
                             <div class="text-center">
@@ -60,6 +60,7 @@
 <script lang="ts">
 import { Options, Vue } from 'vue-class-component'
 import NavbarUsuario from '@/components/NavbarUsuario.vue'
+import auth from '@/utils/auth'
 
 @Options({
 
@@ -98,6 +99,14 @@ export default class Voos extends Vue {
         { destino: 'Nova Iorque', texto: 'Conexão em São Paulo/SP > Nova Iorque' }
 
     ]
+
+    get nomeUsuario() {
+        return localStorage.getItem('usuarioNome') || auth.usuarioNome || ''
+    }
+
+    get localOrigem() {
+        return localStorage.getItem('localOrigem') || auth.localOrigem || ''
+    }
 
     public agendarVoo() {
         this.$router.push('agendar-voo')

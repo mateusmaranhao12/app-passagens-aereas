@@ -2,7 +2,7 @@
     <div class="meus-voos container">
         <div class="row">
             <div class="col">
-                <h3>Meus vôos agendados com origem em Goiânia/GO</h3>
+                <h3>Meus vôos agendados com origem em {{ localOrigem }}</h3>
                 <div class="table-responsive">
                     <table class="table table-striped table-hover">
                         <thead>
@@ -44,6 +44,7 @@
 <script lang="ts">
 import { Options, Vue } from 'vue-class-component'
 import NavbarUsuario from '@/components/NavbarUsuario.vue'
+import auth from '@/utils/auth'
 
 @Options({
 
@@ -54,6 +55,10 @@ import NavbarUsuario from '@/components/NavbarUsuario.vue'
 })
 
 export default class MeusVoos extends Vue {
+
+    get localOrigem() {
+        return localStorage.getItem('localOrigem') || auth.localOrigem || ''
+    }
 
 }
 </script>

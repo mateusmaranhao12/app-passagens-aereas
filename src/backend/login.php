@@ -20,7 +20,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $row = $result->fetch_assoc();
         $nomeUsuario = $row['nome'];
         $idUsuario = $row['id'];
-        $response = array('status' => 'sucesso', 'id' => $idUsuario, 'nome' => $nomeUsuario, 'mensagem' => 'Login realizado com sucesso!');
+        $localOrigem = $row['local_origem'];
+        $response = array('status' => 'sucesso', 'id' => $idUsuario, 'nome' => $nomeUsuario, 'local_origem' => $localOrigem, 'mensagem' => 'Login realizado com sucesso!');
     } else {
 
         // Usuário não encontrado, retornar uma resposta de erro
