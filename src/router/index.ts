@@ -54,7 +54,7 @@ const routes: Array<RouteRecordRaw> = [
       },
 
       {
-        path: 'agendar-voo',
+        path: 'agendar-voo/:destino',
         name: 'agendarVoo',
         component: agendarVoo
       }

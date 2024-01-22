@@ -25,7 +25,7 @@
 
                             <div class="text-center">
                                 <div class="form-group col-md-12 d-flex justify-content-end">
-                                    <button @click="agendarVoo()" class="btn btn-danger mt-3">Agendar</button>
+                                    <button @click="agendarVoo(vn.destino)" class="btn btn-danger mt-3">Agendar</button>
                                 </div>
                             </div>
 
@@ -45,7 +45,7 @@
 
                             <div class="text-center">
                                 <div class="form-group col-md-12 d-flex justify-content-end">
-                                    <button @click="agendarVoo()" class="btn btn-danger mt-3">Agendar</button>
+                                    <button @click="agendarVoo(vi.destino)" class="btn btn-danger mt-3">Agendar</button>
                                 </div>
                             </div>
 
@@ -108,8 +108,10 @@ export default class Voos extends Vue {
         return localStorage.getItem('localOrigem') || auth.localOrigem || ''
     }
 
-    public agendarVoo() {
-        this.$router.push('agendar-voo')
+    public agendarVoo(destino: string) {
+
+        this.$router.push({ name: 'agendarVoo', params: { destino } })
+
     }
 
 }

@@ -1,8 +1,8 @@
 <template>
     <div class="login d-flex justify-content-center">
-        <div class="card mx-auto mt-5 mb-3">
+        <div class="card mx-auto mt-5 mb-5">
             <div class="card-body">
-                <h3 class="card-title mb-5">Agendar vôo: Goiânia/GO - Fortaleza/CE</h3>
+                <h3 class="card-title mb-5">Agendar vôo: {{ localOrigem }} - {{ $route.params.destino }}</h3>
                 <div class="container">
                     <div class="row">
                         <form>
@@ -59,6 +59,7 @@
 <script lang="ts">
 import { Options, Vue } from 'vue-class-component'
 import NavbarUsuario from '@/components/NavbarUsuario.vue'
+import auth from '@/utils/auth'
 
 @Options({
 
@@ -71,43 +72,54 @@ import NavbarUsuario from '@/components/NavbarUsuario.vue'
 export default class agendarVoo extends Vue {
 
     horarios = [
-        {id: 0, horario: '00:00'},
-        {id: 1, horario: '01:00'},
-        {id: 2, horario: '02:00'},
-        {id: 3, horario: '03:00'},
-        {id: 4, horario: '04:00'},
-        {id: 5, horario: '05:00'},
-        {id: 6, horario: '06:00'},
-        {id: 7, horario: '07:00'},
-        {id: 8, horario: '08:00'},
-        {id: 9, horario: '09:00'},
-        {id: 10, horario: '10:00'},
-        {id: 11, horario: '11:00'},
-        {id: 12, horario: '12:00'},
-        {id: 13, horario: '13:00'},
-        {id: 14, horario: '14:00'},
-        {id: 15, horario: '15:00'},
-        {id: 16, horario: '16:00'},
-        {id: 17, horario: '17:00'},
-        {id: 18, horario: '18:00'},
-        {id: 19, horario: '19:00'},
-        {id: 20, horario: '20:00'},
-        {id: 21, horario: '21:00'},
-        {id: 22, horario: '22:00'},
-        {id: 23, horario: '23:00'}
+        { id: 0, horario: '00:00' },
+        { id: 1, horario: '01:00' },
+        { id: 2, horario: '02:00' },
+        { id: 3, horario: '03:00' },
+        { id: 4, horario: '04:00' },
+        { id: 5, horario: '05:00' },
+        { id: 6, horario: '06:00' },
+        { id: 7, horario: '07:00' },
+        { id: 8, horario: '08:00' },
+        { id: 9, horario: '09:00' },
+        { id: 10, horario: '10:00' },
+        { id: 11, horario: '11:00' },
+        { id: 12, horario: '12:00' },
+        { id: 13, horario: '13:00' },
+        { id: 14, horario: '14:00' },
+        { id: 15, horario: '15:00' },
+        { id: 16, horario: '16:00' },
+        { id: 17, horario: '17:00' },
+        { id: 18, horario: '18:00' },
+        { id: 19, horario: '19:00' },
+        { id: 20, horario: '20:00' },
+        { id: 21, horario: '21:00' },
+        { id: 22, horario: '22:00' },
+        { id: 23, horario: '23:00' }
     ]
 
     poltronas = [
-        {id: 1, poltrona: 'Corredor'},
-        {id: 2, poltrona: 'Meio'},
-        {id: 3, poltrona: 'Janela'},
+        { id: 1, poltrona: 'Corredor' },
+        { id: 2, poltrona: 'Meio' },
+        { id: 3, poltrona: 'Janela' },
     ]
 
     categorias = [
-        {id: 1, descricao: 'Econômico'},
-        {id: 2, descricao: 'Executiva'},
-        {id: 3, descricao: 'Premium'},
+        { id: 1, descricao: 'Econômico' },
+        { id: 2, descricao: 'Executiva' },
+        { id: 3, descricao: 'Premium' },
     ]
+
+    destino: string | null = null
+
+    created() {
+        this.destino = String(this.$route.params.destino || '')
+    }
+
+    get localOrigem() {
+        return localStorage.getItem('localOrigem') || auth.localOrigem || ''
+    }
+
 
 }
 </script>
