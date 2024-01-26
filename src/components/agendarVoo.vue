@@ -2,26 +2,29 @@
     <div class="login d-flex justify-content-center">
         <div class="card mx-auto mt-5 mb-5">
             <div class="card-body">
+                <div v-if="mensagem_alerta" class="mt-3 text-center" :class="mensagem_alerta.status">
+                    {{ mensagem_alerta.mensagem }}
+                </div>
                 <h3 class="card-title mb-5">Agendar vôo: {{ localOrigem }} - {{ $route.params.destino }}</h3>
                 <div class="container">
                     <div class="row">
-                        <form>
+                        <form @submit.prevent="enviarDados">
                             <div class="row">
                                 <div class="form-group col-md-6">
-                                    <label for="nome">Ida <span class="text-danger">*</span></label>
-                                    <input type="date" ref="data_ida" id="data_ida" class="form-control mb-3 white-text"
-                                        name="nome" />
+                                    <label for="ida">Ida <span class="text-danger">*</span></label>
+                                    <input v-model="voos.ida" type="date" ref="ida" id="ida"
+                                        class="form-control mb-3 white-text" name="ida" />
                                 </div>
                                 <div class="form-group col-md-6">
-                                    <label for="sobrenome">Volta </label>
-                                    <input type="date" ref="data_volta" id="data_volta" class="form-control mb-3 white-text"
-                                        name="sobrenome" />
+                                    <label for="volta">Volta </label>
+                                    <input v-model="voos.volta" type="date" ref="volta" id="volta"
+                                        class="form-control mb-3 white-text" name="volta" />
                                 </div>
                             </div>
 
                             <div class="form-group">
                                 <label for="cidade">Horário do Vôo: <span class="text-danger">*</span></label>
-                                <select class="form-select" aria-label="horario" id="horario">
+                                <select v-model="voos.horario" class="form-select" aria-label="horario" id="horario">
                                     <option selected>Selecione o horário do vôo</option>
                                     <option v-for="h in horarios" :key="h.id">{{ h.horario }}</option>
                                 </select>
@@ -29,7 +32,7 @@
 
                             <div class="form-group mt-3">
                                 <label for="cidade">Poltrona: <span class="text-danger">*</span></label>
-                                <select class="form-select" aria-label="poltrona" id="poltrona">
+                                <select v-model="voos.poltrona" class="form-select" aria-label="poltrona" id="poltrona">
                                     <option selected>Selecione a poltrona</option>
                                     <option v-for="p in poltronas" :key="p.id">{{ p.poltrona }}</option>
                                 </select>
@@ -37,7 +40,7 @@
 
                             <div class="form-group mt-3">
                                 <label for="cidade">Categoria: <span class="text-danger">*</span></label>
-                                <select class="form-select" aria-label="categoria" id="categoria">
+                                <select v-model="voos.categoria" class="form-select" aria-label="categoria" id="categoria">
                                     <option selected>Selecione sua categoria</option>
                                     <option v-for="c in categorias" :key="c.id">{{ c.descricao }}</option>
                                 </select>
@@ -45,7 +48,8 @@
 
                             <div class="form-row mt-4 mb-4 text-center">
                                 <div class="form-group col-md-12 d-flex justify-content-end">
-                                    <button class="btn btn-danger mt-3">Agendar Vôo</button>
+                                    <button type="submit" class="btn btn-danger mt-3">Agendar
+                                        Vôo</button>
                                 </div>
                             </div>
                         </form>
@@ -60,6 +64,8 @@
 import { Options, Vue } from 'vue-class-component'
 import NavbarUsuario from '@/components/NavbarUsuario.vue'
 import auth from '@/utils/auth'
+import axios from 'axios'
+import { MensagemAlerta } from '@/utils/interfaces'
 
 @Options({
 
@@ -110,14 +116,134 @@ export default class agendarVoo extends Vue {
         { id: 3, descricao: 'Premium' },
     ]
 
-    destino: string | null = null
+    voos = {
+        id_usuario: '',
+        destino: '',
+        ida: '',
+        volta: '',
+        horario: '',
+        poltrona: '',
+        categoria: ''
+    }
 
-    created() {
+    destino: string | null = null
+    mensagem_alerta: MensagemAlerta | null = null
+
+    created() { //exibir nome do destino
         this.destino = String(this.$route.params.destino || '')
     }
 
-    get localOrigem() {
+    get localOrigem() { //exibir nome do local de origem
         return localStorage.getItem('localOrigem') || auth.localOrigem || ''
+    }
+
+    get usuarioId() { //exibir nome do local de origem
+        return localStorage.getItem('usuarioId') || auth.usuarioId || ''
+    }
+
+    public agendarPassagem() { //agendar passagem
+
+        // Certifique-se de que this.voos está preenchido antes de chamar toFormData
+        this.voos.id_usuario = String(this.usuarioId)
+        this.voos.destino = String(this.$route.params.destino || '')
+
+        console.log('Dados a serem enviados:', this.voos)
+        console.log('ID do Usuário a ser enviado:', this.usuarioId)
+
+        var agendar_passagem = this.toFormData(this.voos)
+        axios.post(
+            'http://localhost/Projetos/app-passagens-aereas/src/backend/agendar_voo.php', agendar_passagem
+        ).then((res) => {
+
+            if (res.data.status === 'sucesso') { //enviado com sucesso
+
+                this.mensagem_alerta = {
+                    status: 'alert alert-success',
+                    mensagem: res.data.mensagem
+                }
+
+                this.limparFormulario()
+
+            } else if (res.data.status === 'erro') { //erro ao enviar
+
+                this.mensagem_alerta = {
+                    status: 'alert alert-danger',
+                    mensagem: res.data.mensagem
+                }
+
+            }
+
+            setTimeout(() => {
+                this.mensagem_alerta = { status: '', mensagem: '' }
+            }, 5000)
+
+        }).catch((error) => {
+            console.error('Erro ao enviar a solicitação:', error)
+        })
+    }
+
+    private validarFormulario() { //validar se todos os campos obrigatórios foram preenchidos
+
+        if (this.voos.ida === '' ||
+            this.voos.volta === '' ||
+            this.voos.horario === '' ||
+            this.voos.poltrona === '' ||
+            this.voos.categoria === '' ||
+            this.voos.ida > this.voos.volta) {
+
+            return false
+
+        } else {
+            return true
+        }
+    }
+
+    public enviarDados() { //enviar dados para o banco de dados
+
+        if (this.validarFormulario()) {
+
+            this.agendarPassagem()
+
+        } else if (this.voos.ida > this.voos.volta) { //data de ida precisa ser menor que a data de volta
+
+            this.mensagem_alerta = {
+                status: 'alert alert-warning',
+                mensagem: 'A data de ida precisa ser anterior a data da volta'
+            }
+
+        } else {
+
+            this.mensagem_alerta = {
+                status: 'alert alert-danger',
+                mensagem: 'Erro! preencha todos os campos!'
+            }
+
+        }
+
+        setTimeout(() => {
+            this.mensagem_alerta = { status: '', mensagem: '' }
+        }, 5000)
+
+    }
+
+    private limparFormulario() { //limpar formulario
+
+            this.voos.ida = '',
+            this.voos.volta = '',
+            this.voos.horario = '',
+            this.voos.poltrona = '',
+            this.voos.categoria = ''
+
+    }
+
+    toFormData(obj: Record<string, any>): FormData {
+        const formData = new FormData()
+
+        Object.keys(obj).forEach(key => {
+            formData.append(key, obj[key])
+        })
+
+        return formData
     }
 
 

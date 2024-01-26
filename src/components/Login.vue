@@ -85,7 +85,6 @@ export default class Login extends Vue {
             )
 
             const data = response.data
-            console.log('Dados do servidor após login:', data)
 
             if (data.status === 'sucesso') { //login com sucesso
 
