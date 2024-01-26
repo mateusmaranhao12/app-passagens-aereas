@@ -2,7 +2,7 @@
     <NavbarIndex></NavbarIndex>
     <div class="container">
         <div v-if="mensagem_alerta" class="mt-3 text-center" :class="mensagem_alerta.status">
-            {{ mensagem_alerta.mensagem }}
+            <i :class="mensagem_alerta.icone"></i> {{ mensagem_alerta.mensagem }}
         </div>
     </div>
     <div class="login d-flex justify-content-center">
@@ -123,6 +123,7 @@ export default class Login extends Vue {
             if (res.data.status === 'erro' && res.data.usuario_existente) {
                 // Já existe um usuário com as mesmas informações
                 this.mensagem_alerta = {
+                    icone: 'fa-solid fa-triangle-exclamation',
                     status: 'alert alert-danger',
                     mensagem: 'Já existe um usuário com o mesmo e-mail!'
                 }
@@ -135,6 +136,7 @@ export default class Login extends Vue {
                 ).then((res) => {
                     if (res.data.status === 'sucesso') {
                         this.mensagem_alerta = {
+                            icone: 'fa-solid fa-check',
                             status: 'alert alert-success',
                             mensagem: res.data.mensagem
                         }
@@ -142,13 +144,14 @@ export default class Login extends Vue {
 
                     } else if (res.data.status === 'erro') {
                         this.mensagem_alerta = {
+                            icone: 'fa-solid fa-triangle-exclamation',
                             status: 'alert alert-danger',
                             mensagem: res.data.mensagem
                         }
                     }
 
                     setTimeout(() => {
-                        this.mensagem_alerta = { status: '', mensagem: '' }
+                        this.mensagem_alerta = { icone: '', status: '', mensagem: '' }
                     }, 5000)
 
 
@@ -180,13 +183,14 @@ export default class Login extends Vue {
 
         } else {
             this.mensagem_alerta = {
+                icone: 'fa-solid fa-triangle-exclamation',
                 status: 'alert alert-danger',
-                mensagem: 'Erro! preencha todos os campos!'
+                mensagem: 'Erro, preencha todos os campos!'
             }
         }
 
         setTimeout(() => {
-            this.mensagem_alerta = { status: '', mensagem: '' }
+            this.mensagem_alerta = { icone: '', status: '', mensagem: '' }
         }, 5000)
 
     }

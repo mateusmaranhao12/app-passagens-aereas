@@ -3,7 +3,7 @@
         <div class="card mx-auto mt-5 mb-5">
             <div class="card-body">
                 <div v-if="mensagem_alerta" class="mt-3 text-center" :class="mensagem_alerta.status">
-                    {{ mensagem_alerta.mensagem }}
+                    <i :class="mensagem_alerta.icone"></i> {{ mensagem_alerta.mensagem }}
                 </div>
                 <h3 class="card-title mb-5">Agendar vôo: {{ localOrigem }} - {{ $route.params.destino }}</h3>
                 <div class="container">
@@ -158,6 +158,7 @@ export default class agendarVoo extends Vue {
             if (res.data.status === 'sucesso') { //enviado com sucesso
 
                 this.mensagem_alerta = {
+                    icone: 'fa-solid fa-check',
                     status: 'alert alert-success',
                     mensagem: res.data.mensagem
                 }
@@ -167,6 +168,7 @@ export default class agendarVoo extends Vue {
             } else if (res.data.status === 'erro') { //erro ao enviar
 
                 this.mensagem_alerta = {
+                    icone: 'fa-solid fa-triangle-exclamation',
                     status: 'alert alert-danger',
                     mensagem: res.data.mensagem
                 }
@@ -174,7 +176,7 @@ export default class agendarVoo extends Vue {
             }
 
             setTimeout(() => {
-                this.mensagem_alerta = { status: '', mensagem: '' }
+                this.mensagem_alerta = { icone: '', status: '', mensagem: '' }
             }, 5000)
 
         }).catch((error) => {
@@ -207,6 +209,7 @@ export default class agendarVoo extends Vue {
         } else if (this.voos.ida > this.voos.volta) { //data de ida precisa ser menor que a data de volta
 
             this.mensagem_alerta = {
+                icone: 'fa-solid fa-circle-info',
                 status: 'alert alert-warning',
                 mensagem: 'A data de ida precisa ser anterior a data da volta'
             }
@@ -214,14 +217,15 @@ export default class agendarVoo extends Vue {
         } else {
 
             this.mensagem_alerta = {
+                icone: 'fa-solid fa-triangle-exclamation',
                 status: 'alert alert-danger',
-                mensagem: 'Erro! preencha todos os campos!'
+                mensagem: 'Erro, preencha todos os campos!'
             }
 
         }
 
         setTimeout(() => {
-            this.mensagem_alerta = { status: '', mensagem: '' }
+            this.mensagem_alerta = { icone: '', status: '', mensagem: '' }
         }, 5000)
 
     }

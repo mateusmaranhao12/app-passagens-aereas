@@ -8,7 +8,8 @@ function cleanInput($data)
 }
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    // Get the data from the Vue.js application
+
+    // Dados solicitados no agendarVoo.vue
     $id_usuario = cleanInput($_POST['id_usuario']);
     $destino = cleanInput($_POST['destino']);
     $ida = cleanInput($_POST['ida']);
@@ -17,7 +18,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $poltrona = cleanInput($_POST['poltrona']);
     $categoria = cleanInput($_POST['categoria']);
 
-    // Perform the SQL query to insert data into the database
+    // Inserir na tabela voos os dados
     $sql = "INSERT INTO voos (id_usuario, destino, ida, volta, horario, poltrona, categoria) VALUES ('$id_usuario', '$destino', '$ida', '$volta', '$horario', '$poltrona', '$categoria')";
 
     //verificar se houve erro ou sucesso ao cadastrar o usuario 
@@ -32,5 +33,5 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     echo json_encode(array("error" => "Método não permitido."));
 }
 
-// Close the database connection
+// Fechar db
 $db_conn->close();
