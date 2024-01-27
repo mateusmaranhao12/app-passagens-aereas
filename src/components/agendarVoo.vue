@@ -151,6 +151,7 @@ export default class agendarVoo extends Vue {
         console.log('ID do Usuário a ser enviado:', this.usuarioId)
 
         var agendar_passagem = this.toFormData(this.voos)
+
         axios.post(
             'http://localhost/Projetos/app-passagens-aereas/src/backend/agendar_voo.php', agendar_passagem
         ).then((res) => {
@@ -170,6 +171,14 @@ export default class agendarVoo extends Vue {
                 this.mensagem_alerta = {
                     icone: 'fa-solid fa-triangle-exclamation',
                     status: 'alert alert-danger',
+                    mensagem: res.data.mensagem
+                }
+
+            } else if (res.data.status === 'warning') { //conflito entre datas
+
+                this.mensagem_alerta = {
+                    icone: 'fa-solid fa-info-circle',
+                    status: 'alert alert-warning',
                     mensagem: res.data.mensagem
                 }
 
@@ -232,7 +241,7 @@ export default class agendarVoo extends Vue {
 
     private limparFormulario() { //limpar formulario
 
-            this.voos.ida = '',
+        this.voos.ida = '',
             this.voos.volta = '',
             this.voos.horario = '',
             this.voos.poltrona = '',
