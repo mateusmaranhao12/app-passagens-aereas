@@ -3,7 +3,7 @@
         <div class="row">
             <div class="col">
                 <h3>Meus vôos agendados com origem em {{ localOrigem }}</h3>
-                <div class="table-responsive">
+                <div class="table-responsive text-center">
                     <table class="table table-striped table-hover">
                         <thead>
                             <tr>
@@ -16,24 +16,21 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td>Fortaleza/CE</td>
-                                <td>24/02/2024</td>
-                                <td>29/02/2024</td>
-                                <td>14:00</td>
-                                <td>Janela</td>
-                                <td>Premium</td>
-                            </tr>
-                            <tr>
-                                <td>Buenos Aires</td>
-                                <td>25/03/2024</td>
-                                <td>29/03/2024</td>
-                                <td>15:00</td>
-                                <td>Corredor</td>
-                                <td>Normal</td>
+                            <tr v-for="(voo, index) in voos" :key="index">
+                                <td>{{ voo.destino }}</td>
+                                <td>{{ voo.ida }}</td>
+                                <td>{{ voo.volta }}</td>
+                                <td>{{ voo.horario }}</td>
+                                <td>{{ voo.poltrona }}</td>
+                                <td>{{ voo.categoria }}</td>
                             </tr>
                         </tbody>
                     </table>
+
+                    <div v-if="voos.length === 0" class="alert alert-secondary" role="alert">
+                        <!--Se o usuário não agendou nenhum vôo-->
+                        Você ainda não agendou nenhum vôo
+                    </div>
                 </div>
 
             </div>
@@ -45,6 +42,8 @@
 import { Options, Vue } from 'vue-class-component'
 import NavbarUsuario from '@/components/NavbarUsuario.vue'
 import auth from '@/utils/auth'
+import axios from 'axios'
+import { Voo } from '@/utils/interfaces'
 
 @Options({
 
@@ -56,8 +55,29 @@ import auth from '@/utils/auth'
 
 export default class MeusVoos extends Vue {
 
-    get localOrigem() {
+    voos: Voo[] = [] //carregar array de voos
+
+    created() {
+        this.carregarVoos()
+    }
+
+    get localOrigem() { //carregar Local de Origem
         return localStorage.getItem('localOrigem') || auth.localOrigem || ''
+    }
+
+    async carregarVoos() {
+
+        try {
+
+            const res = await axios.get<Voo[]>(`
+                http://localhost/Projetos/app-passagens-aereas/src/backend/voos_agendados.php?id_usuario=${auth.usuarioId}
+            `)
+            this.voos = res.data
+
+        } catch (error) {
+            console.error('Erro ao carregar os vôos do usuário', error)
+        }
+
     }
 
 }
